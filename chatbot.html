@@ -291,8 +291,8 @@
 
     class DiabetesChatbot {
       constructor() {
-        this.supabaseUrl = 'https://zcprwnfhzyumumrijanw.supabase.co';
-        this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpjcHJ3bmZoenl1bXVtcmlqYW53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY2MzgwOTEsImV4cCI6MjA3MjIxNDA5MX0.RssRjNYyZGJXOYkrhU0V-BcEJaAFwfqLRtugbe8LwWg';
+        this.supabaseUrl = process.env.SUPABASE_URL;
+        this.supabaseKey = process.env.SUPABASE_KEY;
         this.chatHistory = [];
         this.isLoading = false;
         this.initializeEventListeners();
