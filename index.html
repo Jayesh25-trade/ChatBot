@@ -50,6 +50,29 @@
       box-shadow: var(--shadow-lg);
       overflow: hidden; position: relative;
     }
+    .suggestions {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.suggestions button {
+  background: var(--primary-subtle);
+  border: 1px solid var(--primary-light);
+  color: var(--primary-dark);
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.suggestions button:hover {
+  background: var(--primary-light);
+  color: white;
+}
+
     .header {
       display: flex; align-items: center; gap: 20px; padding: 20px 28px;
       background: linear-gradient(135deg, var(--primary-subtle), hsl(170, 76%, 96%));
@@ -172,6 +195,13 @@
               Feel free to upload any medical reports for analysis, or just ask me anything about diabetes management. I'm here to support you every step of the way!
             </div>
             <div class="closing" data-i18n="intro.closing">What would you like to know about today?</div>
+             <div class="suggestions">
+      <button onclick="setMessage('How can I prevent sudden spikes in my blood sugar?')">How can I prevent sudden spikes in my blood sugar?</button>
+      <button onclick="setMessage('What’s a balanced breakfast idea for someone with diabetes?')">What’s a balanced breakfast idea for someone with diabetes?</button>
+      <button onclick="setMessage('Does poor sleep affect my blood sugar control?')">Does poor sleep affect my blood sugar control?</button>
+      
+      <button onclick="setMessage('How do I avoid missing my diabetes medications?')">How do I avoid missing my diabetes medications?</button>
+    </div>
           </div>
         </div>
       </div>
