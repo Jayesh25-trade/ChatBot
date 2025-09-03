@@ -26,7 +26,6 @@ GlycoGuide provides quick guidance on blood sugar targets, medications, diet, an
 | <img width="1918" height="931" alt="image" src="https://github.com/user-attachments/assets/3fc67413-adf8-48d9-b227-35f4b8beffbd" />|
 | <img width="1914" height="977" alt="image" src="https://github.com/user-attachments/assets/9b10f52c-fe9e-4342-9e21-d474c82f8139" />|
 
-> Put PNG/JPGs in `/docs/` and reference them, e.g. `![Chat](/docs/chat.png)`.
 
 ---
 
@@ -34,9 +33,10 @@ GlycoGuide provides quick guidance on blood sugar targets, medications, diet, an
 
 - **Frontend:** HTML5, CSS (custom), vanilla JavaScript
 - **API layer:** Supabase Edge Functions (HTTP endpoints)
-- **Hosting:** Any static host (Render, GitHub Pages, Netlify, Vercel, etc.)
+- **Hosting:** Any static host (Render, GitHub Pages)
 
 ---
+
 
 
 
