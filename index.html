@@ -1,219 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GlycoGuide - Diabetes Care Assistant</title>
+  <title>GlycoGuide — Smart Diabetes Care Assistant</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* ------------------
-       Design Tokens
-    -------------------*/
     :root {
-      --bg: hsl(200, 30%, 98%);
-      --bg-elev: hsl(0, 0%, 100%);
-      --text: hsl(215, 20%, 15%);
-      --muted: hsl(210, 25%, 96%);
-      --muted-2: hsl(210, 20%, 92%);
-      --border: hsl(210, 20%, 86%);
-      --primary: hsl(190, 85%, 35%);           /* medical teal */
-      --primary-2: hsl(190, 85%, 45%);
-      --primary-3: hsl(190, 85%, 60%);
-      --danger: hsl(0, 75%, 50%);
-      --ok: hsl(150, 55%, 40%);
-      --shadow-1: 0 6px 24px hsl(190 85% 25% / 0.08);
-      --shadow-2: 0 10px 30px hsl(200 40% 20% / 0.12);
-      --radius-lg: 18px;
-      --radius-md: 14px;
-      --radius-sm: 12px;
-      --grad:
-        radial-gradient(1000px 600px at 90% -50%, hsl(190 85% 50% / .12) 0, transparent 55%),
-        radial-gradient(1000px 600px at -10% 110%, hsl(210 90% 60% / .12) 0, transparent 50%),
-        linear-gradient(180deg, hsl(0 0% 100% / .85), hsl(0 0% 100% / .85));
+      --surface: hsl(0, 0%, 98%);
+      --surface-elevated: hsl(0, 0%, 100%);
+      --text-primary: hsl(220, 9%, 9%);
+      --text-secondary: hsl(220, 5%, 46%);
+      --text-muted: hsl(220, 4%, 58%);
+      --primary: hsl(210, 100%, 50%);
+      --primary-dark: hsl(210, 100%, 45%);
+      --primary-light: hsl(210, 100%, 60%);
+      --primary-subtle: hsl(210, 100%, 95%);
+      --accent: hsl(170, 76%, 42%);
+      --gray-50: hsl(220, 14%, 96%);
+      --gray-100: hsl(220, 14%, 93%);
+      --gray-200: hsl(220, 13%, 87%);
+      --gray-300: hsl(220, 12%, 78%);
+      --gray-400: hsl(220, 9%, 46%);
+      --gray-600: hsl(220, 12%, 29%);
+      --shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.05);
+      --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
+      --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px; --radius-full: 9999px;
+      --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
+    html, body { height: 100%; overflow: hidden; }
     body {
-      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(1200px 800px at -20% -30%, hsl(190 85% 80% / .25), transparent 40%),
-        radial-gradient(1200px 800px at 120% 130%, hsl(210 85% 80% / .25), transparent 40%),
-        var(--bg);
-      overflow: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text-primary);
+      background: linear-gradient(135deg, var(--gray-50) 0%, hsl(220, 20%, 98%) 100%);
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
     }
-
-    /* Layout */
     .app {
-      max-width: 1400px;
-      height: 100vh;
-      margin: 0 auto;
-      padding: 18px;
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 18px;
+      height: 100vh; padding: 24px; display: grid; grid-template-columns: 1fr 360px; gap: 24px;
+      max-width: 1600px; margin: 0 auto;
     }
-
     .panel {
-      background: var(--grad);
-      border: 1px solid var(--border);
-      border-radius: calc(var(--radius-lg) + 6px);
-      box-shadow: var(--shadow-2);
-      overflow: hidden;
+      background: var(--surface-elevated);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden; position: relative;
     }
-
-    /* Header */
     .header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px 18px;
-      background:
-        linear-gradient(135deg, hsl(190 85% 40% / .14), hsl(210 85% 55% / .14));
-      border-bottom: 1px solid var(--border);
-      position: relative;
+      display: flex; align-items: center; gap: 20px; padding: 20px 28px;
+      background: linear-gradient(135deg, var(--primary-subtle), hsl(170, 76%, 96%));
+      border-bottom: 1px solid var(--gray-200);
     }
-    .brand {
-      display: flex; align-items: center; gap: 12px;
-    }
-    .logo {
-      width: 40px; height: 40px; border-radius: 12px;
-      display: grid; place-items: center;
-      background: linear-gradient(135deg, var(--primary-2), var(--primary-3));
-      color: white; font-weight: 700; box-shadow: var(--shadow-1);
-    }
-    .title { font-weight: 700; letter-spacing: 0.2px; }
-    .subtitle { font-size: 12px; opacity: .75; }
-
-    .header-actions { margin-left: auto; display: flex; gap: 10px; }
-    .pill {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 12px; border-radius: 999px;
-      background: hsl(190 85% 40% / .12);
-      color: hsl(190 85% 20%);
-      border: 1px solid var(--border);
-      font-size: 12px; font-weight: 600;
-    }
-    .upload-button {
-      padding: 8px 12px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      border: none; color: white; border-radius: 10px; cursor: pointer;
-      font-weight: 600; box-shadow: var(--shadow-1);
-      transition: transform .15s ease, filter .15s ease;
-    }
-    .upload-button:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    .brand { display: flex; align-items: center; gap: 16px; }
+    .logo { width: 48px; height: 48px; border-radius: var(--radius-lg); display: grid; place-items: center;
+      background: var(--gradient-primary); color: #fff; font-weight: 800; font-size: 18px; box-shadow: var(--shadow-md); }
+    .logo::after { content: 'G'; }
+    .brand-text .title { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+    .brand-text .subtitle { font-size: 14px; color: var(--text-secondary); font-weight: 500; margin-top: 2px; }
+    .header-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .status-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: var(--radius-full);
+      background: hsl(170,76%,96%); border: 1px solid hsl(170,76%,90%); color: hsl(170,76%,32%); font-size: 13px; font-weight: 600; }
+    .status-indicator { width: 8px; height: 8px; border-radius: 50%; background: hsl(142,76%,36%); }
+    .upload-button { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--gradient-primary);
+      border: none; color:#fff; border-radius: var(--radius-lg); cursor: pointer; font-weight: 600; font-size: 14px;
+      box-shadow: var(--shadow-md); transition: transform .15s ease, box-shadow .15s ease; }
+    .upload-button:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+    #langSelect { padding: 10px 12px; border-radius: 10px; border: 1px solid var(--gray-200); background:#fff; font-weight: 600; }
     #fileInput { display: none; }
-
-    /* Chat area */
-    .chat {
-      display: grid; grid-template-rows: auto 1fr auto;
-      height: 100%;
-    }
-
-    .messages {
-      padding: 16px;
-      overflow-y: auto; scroll-behavior: smooth;
-      display: flex; flex-direction: column; gap: 14px;
-      background:
-        radial-gradient(800px 400px at 50% -5%, hsl(190 85% 60% / .08), transparent 60%),
-        var(--bg-elev);
-    }
-    /* Nice scroll */
-    .messages::-webkit-scrollbar { width: 10px; }
-    .messages::-webkit-scrollbar-thumb {
-      background: var(--muted-2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box;
-    }
-
-    .msg { display: flex; gap: 12px; max-width: 780px; }
+    .chat { display: grid; grid-template-rows: auto 1fr auto; height: 100%; }
+    .messages { padding: 28px; overflow-y: auto; scroll-behavior: smooth; display: flex; flex-direction: column; gap: 24px; background: transparent; }
+    .messages::-webkit-scrollbar { width: 6px; } .messages::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: var(--radius-full); }
+    .msg { display: flex; gap: 16px; max-width: 80%; animation: slideInUp .3s ease-out; }
     .msg.user { margin-left: auto; flex-direction: row-reverse; }
-
-    .avatar {
-      width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
-      display: grid; place-items: center; font-size: 20px; color: white;
-      background: linear-gradient(135deg, var(--primary-2), var(--primary-3));
-      box-shadow: var(--shadow-1);
-    }
-    .avatar.user { background: linear-gradient(135deg, hsl(215 20% 20%), hsl(215 20% 35%)); }
-
-    .bubble {
-      position: relative;
-      background: var(--bg-elev);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px 14px;
-      line-height: 1.5;
-      box-shadow: var(--shadow-1);
-    }
-
-    .msg.user .bubble {
-      background: linear-gradient(135deg, var(--primary-2), var(--primary-3));
-      color: white; border-color: transparent;
-    }
-
-    .bubble strong { font-weight: 700; }
-    .bubble em { font-style: italic; }
-
-    /* Typing indicator */
-    .typing {
-      display: inline-flex; gap: 6px; align-items: center;
-    }
-    .dot {
-      width: 8px; height: 8px; border-radius: 50%; background: var(--primary);
-      animation: pulse 1.4s infinite ease-in-out;
-    }
-    .dot:nth-child(2) { animation-delay: .15s; }
-    .dot:nth-child(3) { animation-delay: .3s; }
-    @keyframes pulse { 0%, 80%, 100% { transform: scale(.75); opacity: .5 } 40% { transform: scale(1); opacity: 1 } }
-
-    /* Input */
-    .composer {
-      padding: 12px; border-top: 1px solid var(--border); background: var(--bg-elev);
-    }
-    .composer-wrap {
-      display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
-    }
-    .input {
-      width: 100%;
-      padding: 14px 16px; border-radius: 999px; outline: none;
-      border: 1px solid var(--border); background: var(--muted);
-      font-size: 14px; box-shadow: var(--shadow-1);
-      transition: box-shadow .2s ease, border-color .2s ease;
-    }
-    .input:focus { border-color: var(--primary-2); box-shadow: 0 0 0 4px hsl(190 85% 40% / .12); }
-
-    .send {
-      width: 46px; height: 46px; border-radius: 50%;
-      border: none; cursor: pointer; color: white;
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      display: grid; place-items: center; font-size: 18px; box-shadow: var(--shadow-2);
-      transition: transform .15s ease, filter .15s ease;
-    }
-    .send:hover { transform: translateY(-1px); filter: brightness(1.05); }
-    .send:disabled { opacity: .6; cursor: not-allowed; }
-
-    .disclaimer { text-align: center; font-size: 12px; opacity: .65; padding-top: 8px; }
-
-    /* Right rail */
+    @keyframes slideInUp { from { opacity: 0; transform: translateY(12px);} to { opacity: 1; transform: translateY(0);} }
+    .avatar { width: 40px; height: 40px; border-radius: var(--radius-lg); flex-shrink: 0; display: grid; place-items: center;
+      font-size: 14px; font-weight: 600; color: #fff; background: var(--gradient-primary); box-shadow: var(--shadow-sm); }
+    .avatar.ai::after { content: 'AI'; } .avatar.user { background: var(--gray-600); } .avatar.user::after { content: 'You'; font-size: 12px; }
+    .bubble { background: var(--surface-elevated); border: 1px solid var(--gray-200); border-radius: 18px; padding: 16px 20px;
+      line-height: 1.6; font-size: 15px; box-shadow: var(--shadow-sm); max-width: 100%; word-wrap: break-word; }
+    .msg.user .bubble { background: var(--gradient-primary); color:#fff; border-color: transparent; }
+    .bubble .greeting { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .bubble .main-text { margin-bottom: 12px; }
+    .bubble .closing { font-style: italic; opacity: .9; }
+    .typing { display: inline-flex; gap: 4px; align-items: center; padding: 4px 0; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); animation: pulse 1.3s infinite ease-in-out; }
+    .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+    @keyframes pulse{0%,80%,100%{transform:scale(.8);opacity:.5}40%{transform:scale(1.2);opacity:1}}
+    .composer { padding: 20px 28px; border-top: 1px solid var(--gray-200); background: linear-gradient(135deg, hsl(220,14%,98%), var(--surface-elevated)); }
+    .composer-wrap { display: flex; gap: 12px; align-items: flex-end; }
+    .input-container { flex:1; position: relative; }
+    .input { width: 100%; padding: 14px 20px; border-radius: var(--radius-full); outline: none; border: 2px solid var(--gray-200);
+      background: var(--surface-elevated); font-size: 15px; color: var(--text-primary); transition: border .2s, box-shadow .2s;
+      resize: none; min-height: 48px; max-height: 120px; }
+    .input::placeholder { color: var(--text-muted); }
+    .input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px hsla(210,100%,50%,.1); }
+    .send { width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer; color:#fff; background: var(--gradient-primary);
+      display: grid; place-items: center; font-size: 16px; box-shadow: var(--shadow-md); transition: transform .15s, box-shadow .15s; flex-shrink: 0; }
+    .send::after { content: '→'; font-weight: 600; } .send:hover{transform:translateY(-1px); box-shadow:var(--shadow-lg)} .send:disabled{opacity:.5; cursor:not-allowed}
+    .disclaimer { text-align: center; font-size: 12px; color: var(--text-muted); padding-top: 12px; }
     .rail { display: grid; grid-template-rows: auto 1fr; height: 100%; }
-    .rail-head { padding: 16px 16px 10px; border-bottom: 1px solid var(--border); background: var(--bg-elev); }
-    .rail-head h3 { font-size: 16px; }
-    .rail-head p { font-size: 12px; opacity: .65; margin-top: 4px; }
-
-    .rail-body { padding: 14px; overflow-y: auto; background: var(--bg-elev); }
-    .card { background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; margin-bottom: 10px; cursor: pointer; transition: background .15s ease, transform .05s ease; box-shadow: var(--shadow-1); }
-    .card:hover { background: hsl(190 85% 96%); transform: translateY(-1px); }
-
+    .rail-head { padding: 28px 28px 20px; border-bottom: 1px solid var(--gray-200); background: linear-gradient(135deg, var(--surface-elevated), var(--gray-50)); }
+    .rail-head h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .rail-head p { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+    .rail-body { padding: 24px; overflow-y: auto; }
     .status-badges { display: flex; gap: 8px; flex-wrap: wrap; }
-    .badge { font-size: 11px; background: var(--muted); border: 1px solid var(--border); padding: 6px 10px; border-radius: 999px; }
-
-    /* Responsive */
-    @media (max-width: 980px) {
-      .app { grid-template-columns: 1fr; }
-      .panel.rail { display: none; }
+    .badge { font-size: 11px; background: var(--gray-100); border: 1px solid var(--gray-200); padding: 4px 10px; border-radius: var(--radius-full); color: var(--text-secondary); font-weight: 600; }
+    .card { background: var(--surface-elevated); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 12px;
+      cursor: pointer; transition: background .2s, transform .1s, box-shadow .2s, border-color .2s; box-shadow: var(--shadow-sm); font-size: 14px; font-weight: 500; }
+    .card:hover { background: var(--primary-subtle); border-color: var(--primary-light); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    @media (max-width: 1024px){ .app{grid-template-columns:1fr; padding:20px} .panel.rail{display:none} }
+    @media (max-width: 768px){
+      .app{padding:16px; gap:16px} .header{padding:16px 20px; flex-direction:column; align-items:flex-start; gap:12px}
+      .header-actions{margin-left:0; width:100%; justify-content:space-between} .logo{width:40px; height:40px; font-size:16px}
+      .messages{padding:20px 16px; gap:20px} .msg{max-width:95%} .bubble{padding:14px 16px; font-size:14px}
+      .composer{padding:16px 20px} .input{padding:12px 16px; font-size:14px} .send{width:44px; height:44px; font-size:14px}
     }
+    /* i18n RTL helpers */
+    html[dir="rtl"] body { direction: rtl; }
+    html[dir="rtl"] .msg { flex-direction: row-reverse; }
+    html[dir="rtl"] .msg.user { flex-direction: row; }
+    html[dir="rtl"] .composer-wrap { flex-direction: row-reverse; }
+    html[dir="rtl"] .input { text-align: right; }
+    /* focus */
+    .upload-button:focus-visible, .send:focus-visible, .card:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
   </style>
 </head>
 <body>
@@ -222,73 +135,110 @@
     <section class="panel chat">
       <header class="header">
         <div class="brand">
-          <div class="logo" aria-hidden="true">✚</div>
-          <div>
-            <div class="title">GlycoGuide</div>
-            <div class="subtitle">Diabetes Care Assistant</div>
+          <div class="logo" aria-label="GlycoGuide"></div>
+          <div class="brand-text">
+            <div class="title" data-i18n="brand.title">GlycoGuide</div>
+            <div class="subtitle" data-i18n="brand.subtitle">Smart Diabetes Care Assistant</div>
           </div>
         </div>
         <div class="header-actions">
-          <div class="pill" title="HIPAA-style privacy not guaranteed; educational use only">AI Assistant • Medical Guidance</div>
-          <button class="upload-button" onclick="document.getElementById('fileInput').click()">📁 Upload Report</button>
+          <div class="status-pill">
+            <span class="status-indicator"></span>
+            <span data-i18n="status.active">AI Assistant Active</span>
+          </div>
+          <button class="upload-button" onclick="document.getElementById('fileInput').click()" data-i18n="actions.upload">Upload Report</button>
           <input type="file" id="fileInput" accept="image/*" onchange="handleFileUpload(event)" />
+          <!-- Language switcher -->
+          <select id="langSelect" aria-label="Select language">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="ar">العربية</option>
+          </select>
         </div>
       </header>
 
       <div class="messages" id="chatMessages" aria-live="polite">
+        <!-- Initial AI greeting -->
         <div class="msg ai">
-          <div class="avatar">🤖</div>
+          <div class="avatar ai"></div>
           <div class="bubble">
-            Hello! I'm your diabetes care assistant. I'm here to help you with blood sugar management, medications, diet planning, and any diabetes-related questions. How can I assist you today? <span style="color: var(--primary);">💙</span>
+            <div class="greeting" data-i18n="intro.greeting">Hi there! Welcome to GlycoGuide!</div>
+            <div class="main-text" data-i18n="intro.p1">
+              I'm your personal diabetes care assistant, and I'm here to make managing your diabetes easier and less stressful. Whether you need help with blood sugar levels, meal planning, medication schedules, or understanding your lab results, I've got you covered.
+            </div>
+            <div class="main-text" data-i18n="intro.p2">
+              Feel free to upload any medical reports for analysis, or just ask me anything about diabetes management. I'm here to support you every step of the way!
+            </div>
+            <div class="closing" data-i18n="intro.closing">What would you like to know about today?</div>
           </div>
         </div>
       </div>
 
       <footer class="composer">
         <div class="composer-wrap">
-          <input
-            type="text"
-            id="messageInput"
-            class="input"
-            placeholder="Ask about blood sugar, medications, diet, or any diabetes concerns..."
-            onkeypress="handleKeyPress(event)"
-            aria-label="Message input"
-          />
-          <button class="send" onclick="sendMessage()" id="sendButton" aria-label="Send message">➤</button>
+          <div class="input-container">
+            <textarea
+              id="messageInput"
+              class="input"
+              data-i18n-placeholder="input.placeholder"
+              placeholder="Ask me about blood sugar levels, diet tips, medications, or anything diabetes-related..."
+              rows="1"
+            ></textarea>
+          </div>
+          <button class="send" onclick="sendMessage()" id="sendButton" aria-label="Send message"></button>
         </div>
-        <p class="disclaimer">AI responses are for educational purposes. Always consult your healthcare provider.</p>
+        <p class="disclaimer" data-i18n="disclaimer">
+          This AI provides educational information only. Always consult your healthcare provider for medical advice.
+        </p>
       </footer>
     </section>
 
-    <!-- Right rail: recommendations -->
+    <!-- Right rail -->
     <aside class="panel rail">
       <div class="rail-head">
-        <h3>Clinical Quick Actions</h3>
-        <p>Fast guidance for diabetes self‑management</p>
-        <div class="status-badges" style="margin-top:8px">
-          <span class="badge">Evidence‑informed</span>
-          <span class="badge">No diagnosis</span>
-          <span class="badge">Privacy-aware</span>
+        <h3 data-i18n="quick.heading">Quick Questions</h3>
+        <p data-i18n="quick.subheading">Get instant answers to common diabetes management questions</p>
+        <div class="status-badges">
+          <span class="badge" data-i18n="badges.evidence">Evidence-based</span>
+          <span class="badge" data-i18n="badges.educational">Educational only</span>
+          <span class="badge" data-i18n="badges.available">Always available</span>
         </div>
       </div>
       <div class="rail-body" id="recommendations">
-        <div class="card" onclick="setMessage('What should my blood sugar levels be?')">🏷️ What’s my target blood sugar range?</div>
-        <div class="card" onclick="setMessage('What are some healthy meal ideas for diabetes?')">🥗 Healthy meal ideas</div>
-        <div class="card" onclick="setMessage('What exercises are good for diabetics?')">💪 Exercise recommendations</div>
-        <div class="card" onclick="setMessage('How can I better manage my diabetes medication schedule?')">💊 Medication reminders</div>
-        <div class="card" onclick="setMessage('How to check blood sugar levels correctly')">🩸 Blood sugar monitoring</div>
-        <div class="card" onclick="setMessage('Best foods for diabetes control')">🛒 Diabetes‑friendly foods</div>
-        <div class="card" onclick="setMessage('Signs of hypoglycemia')">⚠️ Emergency: Low blood sugar</div>
+        <div class="card" onclick="setMessage('What should my target blood sugar range be?')" data-i18n="cards.targets">
+          What are healthy blood sugar target ranges?
+        </div>
+        <div class="card" onclick="setMessage('Can you suggest some diabetes-friendly meal ideas?')" data-i18n="cards.meals">
+          Diabetes-friendly meal planning ideas
+        </div>
+        <div class="card" onclick="setMessage('What types of exercise are best for people with diabetes?')" data-i18n="cards.exercise">
+          Exercise recommendations for diabetes
+        </div>
+        <div class="card" onclick="setMessage('How can I better organize my medication schedule?')" data-i18n="cards.meds">
+          Medication scheduling and reminders
+        </div>
+        <div class="card" onclick="setMessage('What is the proper way to monitor blood glucose?')" data-i18n="cards.monitoring">
+          Blood glucose monitoring best practices
+        </div>
+        <div class="card" onclick="setMessage('What foods should I include in my diabetes diet?')" data-i18n="cards.foods">
+          Best foods for diabetes management
+        </div>
+        <div class="card" onclick="setMessage('What are the warning signs of low blood sugar?')" data-i18n="cards.hypo">
+          Recognizing low blood sugar symptoms
+        </div>
+        <div class="card" onclick="setMessage('How do I handle sick days with diabetes?')" data-i18n="cards.sickday">
+          Managing diabetes during illness
+        </div>
       </div>
     </aside>
   </div>
 
   <script>
     // ------------------------------
-    // GlycoGuide Diabetes Chatbot JS
-    // (Functionality unchanged – UI only)
+    // GlycoGuide Diabetes Chatbot (logic unchanged)
     // ------------------------------
-
     class DiabetesChatbot {
       constructor() {
         this.supabaseUrl = 'https://zcprwnfhzyumumrijanw.supabase.co';
@@ -297,163 +247,223 @@
         this.isLoading = false;
         this.initializeEventListeners();
       }
-
       initializeEventListeners() {
         const messageInput = document.getElementById('messageInput');
         const sendButton = document.getElementById('sendButton');
-        messageInput.addEventListener('keypress', (e) => {
+        messageInput.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.sendMessage(); }
+        });
+        messageInput.addEventListener('input', (e) => {
+          e.target.style.height = 'auto';
+          e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
+          const hasContent = e.target.value.trim().length > 0;
+          sendButton.style.opacity = hasContent && !this.isLoading ? '1' : '0.6';
         });
         sendButton.addEventListener('click', () => this.sendMessage());
       }
-
       async sendMessage() {
         const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
         const message = messageInput.value.trim();
         if (!message || this.isLoading) return;
-        messageInput.value = '';
-        this.isLoading = true;
-        this.addMessage(message, 'user');
-        this.showTypingIndicator();
+        messageInput.value = ''; messageInput.style.height = 'auto'; sendButton.style.opacity = '0.6'; this.isLoading = true;
+        this.addMessage(message, 'user'); this.showTypingIndicator();
         try {
           const response = await this.callDiabetesChatAPI(message);
           this.hideTypingIndicator();
           if (response.response) {
             this.addMessage(response.response, 'ai');
             this.chatHistory.push({ role: 'user', content: message }, { role: 'assistant', content: response.response });
-          } else {
-            throw new Error('No response from AI');
-          }
+          } else { throw new Error('No response from AI'); }
         } catch (error) {
           console.error('Chat error:', error);
           this.hideTypingIndicator();
-          this.addMessage("I apologize, but I'm having trouble connecting right now. Please try again in a moment. If you have urgent diabetes-related concerns, please contact your healthcare provider.", 'ai');
-        } finally {
-          this.isLoading = false;
-        }
+          this.addMessage(
+            i18n.t('errors.chatFail', "I apologize, but I'm experiencing some technical difficulties right now. Please try again in a moment. If you have urgent diabetes-related concerns, please contact your healthcare provider immediately."),
+            'ai'
+          );
+        } finally { this.isLoading = false; sendButton.style.opacity = '1'; messageInput.focus(); }
       }
-
       async callDiabetesChatAPI(message) {
         const response = await fetch(`${this.supabaseUrl}/functions/v1/diabetes-chat`, {
           method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${this.supabaseKey}`,
-            'Content-Type': 'application/json',
-            'apikey': this.supabaseKey,
-          },
+          headers: { 'Authorization': `Bearer ${this.supabaseKey}`, 'Content-Type': 'application/json', 'apikey': this.supabaseKey },
           body: JSON.stringify({ message, chatHistory: this.chatHistory })
         });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         return await response.json();
       }
-
       addMessage(content, sender) {
         const chatMessages = document.getElementById('chatMessages');
-        const row = document.createElement('div');
-        row.className = `msg ${sender}`;
-
-        const avatar = document.createElement('div');
-        avatar.className = 'avatar' + (sender === 'user' ? ' user' : '');
-        avatar.textContent = sender === 'user' ? '👤' : '🤖';
-
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble';
+        const row = document.createElement('div'); row.className = `msg ${sender}`;
+        const avatar = document.createElement('div'); avatar.className = `avatar ${sender}`;
+        const bubble = document.createElement('div'); bubble.className = 'bubble';
         bubble.innerHTML = this.formatMessage(content);
-
-        row.appendChild(avatar);
-        row.appendChild(bubble);
-        chatMessages.appendChild(row);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        row.appendChild(avatar); row.appendChild(bubble); chatMessages.appendChild(row);
+        setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 80);
       }
-
       formatMessage(content) {
-        return content
-          .replace(/\*\*(.*?)\*\*/g, '<strong>$1<\/strong>')
-          .replace(/\*(.*?)\*/g, '<em>$1<\/em>')
-          .replace(/\n/g, '<br>')
-          .replace(/💙/g, '<span style="color: var(--primary);">💙<\/span>');
+        let formatted = content
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.*?)\*/g, '<em>$1</em>')
+          .replace(/\n\n/g, '</div><div class="main-text">')
+          .replace(/\n/g, '<br>');
+        return `<div class="main-text">${formatted}</div>`;
       }
-
       showTypingIndicator() {
         const chatMessages = document.getElementById('chatMessages');
-        const row = document.createElement('div');
-        row.className = 'msg ai';
-        row.id = 'typing-indicator';
-        row.innerHTML = `
-          <div class="avatar">🤖<\/div>
-          <div class="bubble"><span class="typing"><span class="dot"><\/span><span class="dot"><\/span><span class="dot"><\/span><\/span><\/div>
-        `;
-        chatMessages.appendChild(row);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        const row = document.createElement('div'); row.className = 'msg ai'; row.id = 'typing-indicator';
+        row.innerHTML = `<div class="avatar ai"></div>
+          <div class="bubble"><span class="typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></div>`;
+        chatMessages.appendChild(row); setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 80);
       }
-
       hideTypingIndicator() {
-        const n = document.getElementById('typing-indicator');
-        if (n) n.remove();
+        const el = document.getElementById('typing-indicator'); if (!el) return;
+        el.style.opacity = '0'; el.style.transform = 'translateY(-8px)'; setTimeout(() => el.remove(), 180);
       }
-
       setMessage(message) {
         const messageInput = document.getElementById('messageInput');
-        messageInput.value = message; messageInput.focus();
+        messageInput.value = message; messageInput.style.height = 'auto';
+        messageInput.style.height = Math.min(messageInput.scrollHeight, 120) + 'px'; messageInput.focus();
+        document.getElementById('sendButton').style.opacity = '1';
       }
-
       async handleFileUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        if (!file.type.startsWith('image/')) { alert('Please select an image file (JPG, PNG, etc.)'); return; }
-        if (file.size > 10 * 1024 * 1024) { alert('Please select an image smaller than 10MB'); return; }
+        const file = event.target.files[0]; if (!file) return;
+        if (!file.type.startsWith('image/')) { alert(i18n.t('errors.imageOnly', 'Please select an image file (JPG, PNG, etc.)')); return; }
+        if (file.size > 10 * 1024 * 1024) { alert(i18n.t('errors.imageSize', 'Please select an image smaller than 10MB')); return; }
         try {
           const base64 = await this.fileToBase64(file);
-          this.addMessage(`📊 Analyzing your medical report: ${file.name}...`, 'user');
+          this.addMessage(i18n.t('upload.msg', `I've uploaded my medical report: **${file.name}** - Could you please analyze this for me?`).replace('**FILENAME**', file.name), 'user');
           this.showTypingIndicator();
-          const response = await this.analyzeReport(base64);
-          this.hideTypingIndicator();
+          const response = await this.analyzeReport(base64); this.hideTypingIndicator();
           if (response.analysis) {
-            this.addMessage(`📊 <strong>Medical Report Analysis:<\/strong><br><br>${response.analysis}`, 'ai');
+            this.addMessage(
+              i18n.t('upload.analysisPrefix', '**Medical Report Analysis**\n\nI’ve carefully reviewed your uploaded report. Here’s what I found:\n\n') +
+              response.analysis + '\n\n' +
+              i18n.t('upload.analysisSuffix', '*This analysis is for educational purposes only. Please discuss with your healthcare provider.*'),
+              'ai'
+            );
           } else { throw new Error('No analysis returned'); }
         } catch (error) {
-          console.error('File upload error:', error);
-          this.hideTypingIndicator();
-          this.addMessage("I apologize, but I couldn't analyze your report right now. Please try again later or consult your healthcare provider for interpretation.", 'ai');
+          console.error('File upload error:', error); this.hideTypingIndicator();
+          this.addMessage(i18n.t('errors.analyzeFail', "I'm sorry, but I couldn't analyze your report right now. Please try again later or consult your healthcare provider."), 'ai');
         }
       }
-
       async analyzeReport(base64Image) {
         const response = await fetch(`${this.supabaseUrl}/functions/v1/analyze-report`, {
           method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${this.supabaseKey}`,
-            'Content-Type': 'application/json',
-            'apikey': this.supabaseKey,
-          },
+          headers: { 'Authorization': `Bearer ${this.supabaseKey}`, 'Content-Type': 'application/json', 'apikey': this.supabaseKey },
           body: JSON.stringify({ imageBase64: base64Image, additionalContext: '' })
         });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         return await response.json();
       }
-
       fileToBase64(file) {
         return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = (err) => reject(err);
+          const reader = new FileReader(); reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result); reader.onerror = (err) => reject(err);
         });
       }
     }
 
-    // Global handlers expected by HTML
+    // Expose required globals for HTML handlers
     let chatbot;
-    function sendMessage() { chatbot.sendMessage(); }
-    function setMessage(message) { chatbot.setMessage(message); }
-    function handleKeyPress(event) {
-      if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); sendMessage(); }
-    }
-    function handleFileUpload(event) { chatbot.handleFileUpload(event); }
+    function sendMessage(){ chatbot.sendMessage(); }
+    function setMessage(m){ chatbot.setMessage(m); }
+    function handleFileUpload(e){ chatbot.handleFileUpload(e); }
 
+    // ------------------------------
+    // Lightweight i18n (UI only)
+    // ------------------------------
+    const I18N = {
+      en:{brand:{title:"GlycoGuide",subtitle:"Smart Diabetes Care Assistant"},status:{active:"AI Assistant Active"},
+        actions:{upload:"Upload Report"},
+        intro:{greeting:"Hi there! Welcome to GlycoGuide!",p1:"I'm your personal diabetes care assistant, and I'm here to make managing your diabetes easier and less stressful. Whether you need help with blood sugar levels, meal planning, medication schedules, or understanding your lab results, I've got you covered.",p2:"Feel free to upload any medical reports for analysis, or just ask me anything about diabetes management. I'm here to support you every step of the way!",closing:"What would you like to know about today?"},
+        input:{placeholder:"Ask me about blood sugar levels, diet tips, medications, or anything diabetes-related..."},
+        disclaimer:"This AI provides educational information only. Always consult your healthcare provider for medical advice.",
+        quick:{heading:"Quick Questions",subheading:"Get instant answers to common diabetes management questions"},
+        badges:{evidence:"Evidence-based",educational:"Educational only",available:"Always available"},
+        cards:{targets:"What are healthy blood sugar target ranges?",meals:"Diabetes-friendly meal planning ideas",exercise:"Exercise recommendations for diabetes",meds:"Medication scheduling and reminders",monitoring:"Blood glucose monitoring best practices",foods:"Best foods for diabetes management",hypo:"Recognizing low blood sugar symptoms",sickday:"Managing diabetes during illness"},
+        errors:{chatFail:"I apologize, but I'm experiencing some technical difficulties right now. Please try again in a moment. If you have urgent diabetes-related concerns, please contact your healthcare provider immediately.",imageOnly:"Please select an image file (JPG, PNG, etc.)",imageSize:"Please select an image smaller than 10MB",analyzeFail:"I'm sorry, but I couldn't analyze your report right now. Please try again later or consult your healthcare provider."},
+        upload:{msg:"I've uploaded my medical report: **FILENAME** — Could you please analyze this for me?",analysisPrefix:"**Medical Report Analysis**\n\nI’ve carefully reviewed your uploaded report. Here’s what I found:\n\n",analysisSuffix:"*This analysis is for educational purposes only. Please discuss with your healthcare provider.*"}
+      },
+      hi:{brand:{title:"GlycoGuide",subtitle:"स्मार्ट डायबिटीज़ केयर असिस्टेंट"},status:{active:"एआई असिस्टेंट सक्रिय"},
+        actions:{upload:"रिपोर्ट अपलोड करें"},
+        intro:{greeting:"नमस्ते! GlycoGuide में आपका स्वागत है!",p1:"मैं आपका व्यक्तिगत डायबिटीज़ केयर असिस्टेंट हूँ। ब्लड शुगर, डाइट प्लानिंग, दवाइयों का शेड्यूल और लैब रिपोर्ट समझने में आपकी मदद कर सकता हूँ।",p2:"आप अपनी मेडिकल रिपोर्ट अपलोड कर सकते हैं या डायबिटीज़ मैनेजमेंट से जुड़ा कोई भी प्रश्न पूछ सकते हैं।",closing:"आज आप किस बारे में जानना चाहेंगे?"},
+        input:{placeholder:"ब्लड शुगर, डाइट, दवाइयाँ आदि से जुड़ा प्रश्न यहाँ लिखें…"},
+        disclaimer:"यह एआई केवल शैक्षिक जानकारी देता है। चिकित्सा सलाह के लिए अपने डॉक्टर से परामर्श करें।",
+        quick:{heading:"त्वरित प्रश्न",subheading:"डायबिटीज़ मैनेजमेंट से जुड़े आम सवालों के तुरंत उत्तर"},
+        badges:{evidence:"एविडेंस-आधारित",educational:"केवल शैक्षिक",available:"हमेशा उपलब्ध"},
+        cards:{targets:"स्वस्थ ब्लड शुगर लक्ष्य रेंज क्या है?",meals:"डायबिटीज़-फ्रेंडली भोजन के सुझाव",exercise:"व्यायाम संबंधी सिफारिशें",meds:"दवाई शेड्यूल और रिमाइंडर",monitoring:"ब्लड ग्लूकोज़ मॉनिटरिंग के बेहतरीन तरीके",foods:"डायबिटीज़ मैनेजमेंट के लिए बेहतर खाद्य पदार्थ",hypo:"लो ब्लड शुगर के लक्षण",sickday:"बीमारी के दिनों में मैनेजमेंट"},
+        errors:{chatFail:"कृपया क्षमा करें, तकनीकी समस्या आ रही है। थोड़ी देर बाद पुनः प्रयास करें। आपात स्थिति में अपने डॉक्टर से तुरंत संपर्क करें।",imageOnly:"कृपया छवि फ़ाइल चुनें (JPG, PNG आदि)",imageSize:"कृपया 10MB से छोटी छवि चुनें",analyzeFail:"अभी रिपोर्ट का विश्लेषण नहीं हो सका। बाद में पुनः प्रयास करें या अपने डॉक्टर से सलाह लें।"},
+        upload:{msg:"मैंने अपनी मेडिकल रिपोर्ट अपलोड कर दी है: **FILENAME** — कृपया इसका विश्लेषण कर दें।",analysisPrefix:"**मेडिकल रिपोर्ट विश्लेषण**\n\nमैंने आपकी रिपोर्ट ध्यान से देखी। यह प्रमुख बातें हैं:\n\n",analysisSuffix:"*यह केवल शैक्षिक जानकारी है। कृपया डॉक्टर से चर्चा करें।*"}
+      },
+      es:{brand:{title:"GlycoGuide",subtitle:"Asistente inteligente para la diabetes"},status:{active:"Asistente de IA activo"},
+        actions:{upload:"Subir informe"},
+        intro:{greeting:"¡Hola! ¡Bienvenido a GlycoGuide!",p1:"Soy tu asistente personal para el cuidado de la diabetes…",p2:"Puedes subir informes médicos o preguntar lo que quieras…",closing:"¿Sobre qué te gustaría saber hoy?"},
+        input:{placeholder:"Pregúntame sobre glucosa, dieta, medicación…"},
+        disclaimer:"Información educativa. Consulta a tu profesional de salud.",
+        quick:{heading:"Preguntas rápidas",subheading:"Respuestas instantáneas a dudas frecuentes"},
+        badges:{evidence:"Basado en evidencia",educational:"Solo educativo",available:"Siempre disponible"},
+        cards:{targets:"¿Cuáles son los rangos saludables de glucosa?",meals:"Ideas de comidas adecuadas",exercise:"Recomendaciones de ejercicio",meds:"Recordatorios de medicación",monitoring:"Buenas prácticas de monitoreo",foods:"Mejores alimentos",hypo:"Síntomas de hipoglucemia",sickday:"Manejo durante enfermedad"},
+        errors:{chatFail:"Perdón, tengo problemas técnicos. Intenta de nuevo en un momento. Para urgencias, contacta a tu médico.",imageOnly:"Selecciona una imagen (JPG, PNG, etc.)",imageSize:"Selecciona una imagen menor a 10MB",analyzeFail:"No pude analizar tu informe ahora. Intenta más tarde o consulta a tu médico."},
+        upload:{msg:"He subido mi informe médico: **FILENAME** — ¿Puedes analizarlo?",analysisPrefix:"**Análisis del informe médico**\n\nHe revisado tu informe. Esto encontré:\n\n",analysisSuffix:"*Análisis educativo. Consulta con tu profesional de salud.*"}
+      },
+      fr:{brand:{title:"GlycoGuide",subtitle:"Assistant intelligent pour le diabète"},status:{active:"Assistant IA actif"},
+        actions:{upload:"Téléverser un rapport"},
+        intro:{greeting:"Bonjour ! Bienvenue sur GlycoGuide !",p1:"Je suis votre assistant personnel…",p2:"Téléversez un rapport ou posez vos questions…",closing:"De quoi souhaitez-vous parler aujourd’hui ?"},
+        input:{placeholder:"Posez vos questions (glycémie, alimentation, médicaments, etc.)"},
+        disclaimer:"Outil éducatif. Consultez votre professionnel de santé.",
+        quick:{heading:"Questions rapides",subheading:"Réponses instantanées aux questions fréquentes"},
+        badges:{evidence:"Fondé sur des preuves",educational:"Éducatif uniquement",available:"Toujours disponible"},
+        cards:{targets:"Objectifs glycémiques sains ?",meals:"Idées de repas adaptés",exercise:"Recommandations d’exercice",meds:"Rappels de médication",monitoring:"Bonnes pratiques de suivi",foods:"Meilleurs aliments",hypo:"Signes d’hypoglycémie",sickday:"Gérer le diabète en cas de maladie"},
+        errors:{chatFail:"Désolé, problème technique. Réessayez plus tard. En cas d’urgence, contactez votre médecin.",imageOnly:"Sélectionnez une image (JPG, PNG…)",imageSize:"Image < 10 Mo svp",analyzeFail:"Impossible d’analyser maintenant. Réessayez plus tard ou consultez votre médecin."},
+        upload:{msg:"J’ai téléversé mon rapport médical : **FILENAME** — Pouvez-vous l’analyser ?",analysisPrefix:"**Analyse du rapport médical**\n\nVoici ce que j’ai trouvé :\n\n",analysisSuffix:"*Analyse éducative. Consultez votre professionnel de santé.*"}
+      },
+      ar:{brand:{title:"جلايكو جايد",subtitle:"مساعد ذكي لإدارة السكري"},status:{active:"المساعد الذكي نشط"},
+        actions:{upload:"رفع التقرير"},
+        intro:{greeting:"مرحبًا! أهلاً بك في جلايكو جايد!",p1:"أنا مساعدك الشخصي لإدارة السكري…",p2:"يمكنك رفع تقاريرك أو طرح أي سؤال…",closing:"بماذا ترغب أن أساعدك اليوم؟"},
+        input:{placeholder:"اسألني عن سكر الدم، النظام الغذائي، الأدوية…"},
+        disclaimer:"المحتوى تعليمي فقط. استشر طبيبك دائمًا.",
+        quick:{heading:"أسئلة سريعة",subheading:"إجابات فورية على الأسئلة الشائعة"},
+        badges:{evidence:"مدعوم بالأدلة",educational:"تعليمي فقط",available:"متاح دائمًا"},
+        cards:{targets:"ما هي حدود سكر الدم الصحية؟",meals:"أفكار وجبات مناسبة",exercise:"تمارين موصى بها",meds:"تنظيم الأدوية والتذكير",monitoring:"أفضل ممارسات المتابعة",foods:"أفضل الأطعمة",hypo:"أعراض انخفاض السكر",sickday:"إدارة السكري أثناء المرض"},
+        errors:{chatFail:"عذرًا، هناك مشكلة تقنية. حاول لاحقًا. للطوارئ اتصل بطبيبك.",imageOnly:"رجاءً اختر ملف صورة (JPG, PNG)",imageSize:"الحد الأقصى 10MB",analyzeFail:"تعذّر تحليل التقرير الآن. حاول لاحقًا أو استشر طبيبك."},
+        upload:{msg:"قمتُ برفع تقريري الطبي: **FILENAME** — هل يمكنك تحليله؟",analysisPrefix:"**تحليل التقرير الطبي**\n\nإليك ما وجدته:\n\n",analysisSuffix:"*تحليل تعليمي فقط. استشر طبيبك دائمًا.*"}
+      }
+    };
+    const RTL_LANGS = new Set(["ar","fa","he","ur"]);
+    const i18n = {
+      lang: "en",
+      detect() {
+        const saved = localStorage.getItem("lang");
+        if (saved && I18N[saved]) return saved;
+        const nav = (navigator.language || "en").toLowerCase();
+        const base = nav.split("-")[0];
+        return I18N[base] ? base : "en";
+      },
+      setDir(lang){ const rtl = RTL_LANGS.has(lang); document.documentElement.setAttribute("dir", rtl?"rtl":"ltr"); document.documentElement.setAttribute("lang", lang); },
+      t(path, fallback=""){ const parts = path.split("."); let cur = I18N[this.lang] || I18N.en; for (const p of parts) cur = cur?.[p];
+        if (typeof cur === "string") return cur; cur = I18N.en; for (const p of parts) cur = cur?.[p]; return typeof cur === "string" ? cur : fallback; },
+      apply() {
+        document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.getAttribute("data-i18n"); el.innerHTML = i18n.t(k, el.innerHTML); });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach(el => { const k = el.getAttribute("data-i18n-placeholder"); el.setAttribute("placeholder", i18n.t(k, el.getAttribute("placeholder")||"")); });
+        document.title = `${i18n.t("brand.title","GlycoGuide")} — ${i18n.t("brand.subtitle","Smart Diabetes Care Assistant")}`;
+      },
+      init() {
+        this.lang = this.detect(); this.setDir(this.lang); this.apply();
+        const sel = document.getElementById("langSelect");
+        if (sel) { if ([...sel.options].some(o=>o.value===this.lang)) sel.value = this.lang;
+          sel.addEventListener("change", () => { this.lang = sel.value; localStorage.setItem("lang", this.lang); this.setDir(this.lang); this.apply(); }); }
+      }
+    };
+
+    // Initialize app
     document.addEventListener('DOMContentLoaded', () => {
+      i18n.init();
       chatbot = new DiabetesChatbot();
-      console.log('GlycoGuide Diabetes Chatbot initialized successfully!');
+      // focus input
+      setTimeout(() => document.getElementById('messageInput').focus(), 100);
     });
   </script>
 </body>
